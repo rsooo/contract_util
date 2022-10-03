@@ -6,6 +6,8 @@ import {Erc721Abi} from "../../abis/erc721Abi";
 
 const MINTER_ROLE_HASH = '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
 
+declare var window: any
+
 export const ERC721 = () => {
 
   const [web3, setWeb3] = useState<Web3|null>(null)
@@ -65,7 +67,7 @@ export const ERC721 = () => {
     const res = await balanceOf.call()
     console.log("balance", res)
 
-    const gasPrice = await web3?.eth?.getGasPrice()
+    const gasPrice : number = parseInt(await web3?.eth?.getGasPrice())
     const mint = contract?.methods?.mint(myAddress)
     mint.send({from: myAddress, gasPrice: gasPrice * 20}).then( async (res : any) => {
       // 番号をUpdate

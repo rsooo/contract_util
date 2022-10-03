@@ -1,5 +1,5 @@
 import { AbiItem } from "web3-utils";
-export const Erc721Abi : AbiItem = [
+export const Erc721Abi : AbiItem[] = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
