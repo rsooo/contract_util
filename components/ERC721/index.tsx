@@ -22,6 +22,10 @@ export const ERC721 = () => {
   const [grantTargetAddress, setGrantTargetAddress] = useState('')
   const [approveForAllTargetAddress, setApproveForAllTargetAddress] = useState('')
 
+  const [transfer_token_id, setTransferTokenId] = useState<string>(0)
+  const [burn_token_id, setBurnTokenId] = useState<string>(0)
+  const [transfer_token_address, setTransferTokenAddress] = useState<string>('')
+
 
   const enableWeb3Provider = async () => {
     // console.log("enable", address)
@@ -102,6 +106,25 @@ export const ERC721 = () => {
     })
   }
 
+  const execTransfer = async () => {
+    const transfer = contract.methods.safeTransferFrom(myAddress, transfer_token_address, transfer_token_id)
+    const result: any = transfer.send({from: myAddress}).then(res => {
+        console.log("success", res)
+      }).catch(e => {
+        console.log("error", e)
+      })
+  }
+
+  const execBurn = async () => {
+    const transfer = contract.methods.burn(burn_token_id)
+    const result: any = transfer.send({from: myAddress}).then(res => {
+      console.log("success", res)
+    }).catch(e => {
+      console.log("error", e)
+    })
+  }
+
+
   return (
     <Box>
       <Heading size="xl">ERC721 コントラクト操作用ユーティリティページ</Heading>
@@ -140,6 +163,19 @@ export const ERC721 = () => {
 
                     {/*<Button onClick={setApproveForAll}>setApprovedForAll</Button>*/}
                     {/*<Button onClick={sendTransaction}>sendTransaction</Button>*/}
+
+                    <Flex>
+                        <Input w="100px" value={transfer_token_id} onChange={ (e) => {setTransferTokenId(e.target.value)}}></Input>
+                        <Input w="500px" value={transfer_token_address} onChange={ (e) => {setTransferTokenAddress(e.target.value)}}></Input>
+                        <Button onClick={execTransfer}>Transfer</Button>
+                    </Flex>
+
+                    <Flex>
+                        <Input w="100px" value={burn_token_id} onChange={ (e) => {setBurnTokenId(e.target.value)}}></Input>
+                        <Button onClick={execBurn}>BURN</Button>
+                    </Flex>
+
+
                 </Box>
 
             </Box>
