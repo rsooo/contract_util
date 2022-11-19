@@ -26,6 +26,8 @@ export const ERC721 = () => {
   const [burn_token_id, setBurnTokenId] = useState<string>(0)
   const [transfer_token_address, setTransferTokenAddress] = useState<string>('')
 
+  const [ownerAddress, setOwnerAddress] = useState('')
+
 
   const enableWeb3Provider = async () => {
     // console.log("enable", address)
@@ -115,6 +117,13 @@ export const ERC721 = () => {
       })
   }
 
+  const getOwnerAddress = async () => {
+    const ownerAddress = await contract.methods.ownerOf(transfer_token_id).call()
+    setOwnerAddress(ownerAddress)
+  }
+
+
+
   const execBurn = async () => {
     const transfer = contract.methods.burn(burn_token_id)
     const result: any = transfer.send({from: myAddress}).then(res => {
@@ -168,7 +177,10 @@ export const ERC721 = () => {
                         <Input w="100px" value={transfer_token_id} onChange={ (e) => {setTransferTokenId(e.target.value)}}></Input>
                         <Input w="500px" value={transfer_token_address} onChange={ (e) => {setTransferTokenAddress(e.target.value)}}></Input>
                         <Button onClick={execTransfer}>Transfer</Button>
+                        <Button onClick={getOwnerAddress}>GetOwnerAddress</Button>
                     </Flex>
+
+                    { ownerAddress && <Box>Owner Address: {ownerAddress}</Box> }
 
                     <Flex>
                         <Input w="100px" value={burn_token_id} onChange={ (e) => {setBurnTokenId(e.target.value)}}></Input>
