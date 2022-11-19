@@ -22,8 +22,8 @@ export const ERC721 = () => {
   const [grantTargetAddress, setGrantTargetAddress] = useState('')
   const [approveForAllTargetAddress, setApproveForAllTargetAddress] = useState('')
 
-  const [transfer_token_id, setTransferTokenId] = useState<string>(0)
-  const [burn_token_id, setBurnTokenId] = useState<string>(0)
+  const [transfer_token_id, setTransferTokenId] = useState<string>('0')
+  const [burn_token_id, setBurnTokenId] = useState<string>('0')
   const [transfer_token_address, setTransferTokenAddress] = useState<string>('')
 
   const [ownerAddress, setOwnerAddress] = useState('')
